@@ -1,10 +1,16 @@
+import { Separator } from "@/components/ui/separator";
+
 export default function Home() {
   return (
-    <main>
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Excepturi
-      architecto ipsum, rem ea eligendi rerum quidem pariatur, voluptas
-      inventore dolorem consequatur, est eos iusto possimus adipisci dicta
-      delectus qui sint.
+    <main className="space-y-6">
+      <div>
+        <h3 className="text-lg font-medium">Account</h3>
+        <p className="text-sm text-muted-foreground">
+          Update your account settings. Set your preferred language and
+          timezone.
+        </p>
+      </div>
+      <Separator />
     </main>
   );
 }

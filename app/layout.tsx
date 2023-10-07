@@ -33,12 +33,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-y-screen">
+      <body className="min-h-screen bg-background">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="min-h-screen">
             <SiteHeader />
-            <div className="container flex flex-col lg:flex-row lg:space-x-12 lg:py-4">
-              <aside className="-mx-4 lg:w-1/5 overflow-auto">
+            <div className="container flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 lg:py-4">
+              <aside className="-mx-4 overflow-auto pt-4 lg:w-1/5 lg:pt-0">
                 <SidebarNav items={sidebarNavItems} />
               </aside>
               <div className="flex-1">{children}</div>
