@@ -1,5 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 
+import { ProfileForm } from "./profile-form";
+
 export default function Profile() {
   return (
     <main className="space-y-6">
@@ -10,6 +12,7 @@ export default function Profile() {
         </p>
       </div>
       <Separator />
+      <ProfileForm />
     </main>
   );
 }

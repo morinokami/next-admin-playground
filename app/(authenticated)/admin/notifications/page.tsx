@@ -1,5 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 
+import { NotificationsForm } from "./notifications-home";
+
 export default function Notifications() {
   return (
     <main className="space-y-6">
@@ -10,6 +12,7 @@ export default function Notifications() {
         </p>
       </div>
       <Separator />
+      <NotificationsForm />
     </main>
   );
 }
