@@ -1,6 +1,5 @@
 import Image from "next/image";
 
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Separator } from "@/components/ui/separator";
 
 import { UserNav } from "./user-nav";
@@ -19,7 +18,6 @@ export function SiteHeader() {
         />
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-1">
-            <ThemeToggle />
             <UserNav />
           </nav>
         </div>

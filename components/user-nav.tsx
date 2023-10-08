@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -14,11 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function UserNav() {
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
-
-  async function onLogout() {
-    router.push("/login");
-  }
 
   return (
     <DropdownMenu>
@@ -40,7 +38,15 @@ export function UserNav() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={onLogout}>Log out</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          Toggle theme
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => router.push("/login")}>
+          Log out
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
