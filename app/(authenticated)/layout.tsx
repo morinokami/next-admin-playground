@@ -18,10 +18,6 @@ const sidebarNavItems = [
     title: "Display",
     href: "/admin/display",
   },
-  {
-    title: "Logout",
-    href: "/login",
-  },
 ];
 
 export default function AdminLayout({
