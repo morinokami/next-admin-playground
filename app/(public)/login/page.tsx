@@ -15,7 +15,7 @@ export default function Login() {
         priority
       />
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
+        <h1 className="text-2xl font-medium tracking-tight">
           Log in to your account
         </h1>
         <p className="text-sm text-muted-foreground">
