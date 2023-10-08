@@ -17,12 +17,16 @@ const sidebarNavItems = [
     href: "/",
   },
   {
-    title: "Account",
-    href: "/examples/forms/account",
+    title: "Profile",
+    href: "/profile",
   },
   {
-    title: "Appearance",
-    href: "/examples/forms/appearance",
+    title: "Notifications",
+    href: "/notifications",
+  },
+  {
+    title: "Display",
+    href: "/display",
   },
 ];
 
