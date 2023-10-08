@@ -1,4 +1,5 @@
 import { SidebarNav } from "@/components/sidebar-nav";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
 const sidebarNavItems = [
@@ -26,14 +27,15 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-col space-y-4">
       <SiteHeader />
-      <div className="container flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 lg:py-8">
-        <aside className="-mx-4 overflow-auto pt-4 lg:w-1/5 lg:pt-0">
+      <div className="container flex flex-1 flex-col space-y-4 pb-2 lg:flex-row lg:space-x-12 lg:space-y-0 lg:py-8">
+        <aside className="-mx-4 overflow-auto lg:w-1/5">
           <SidebarNav items={sidebarNavItems} />
         </aside>
         <div className="flex-1">{children}</div>
       </div>
-    </>
+      <SiteFooter />
+    </div>
   );
 }
