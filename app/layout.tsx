@@ -37,7 +37,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="min-h-screen">
             <SiteHeader />
-            <div className="container flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 lg:py-4">
+            <div className="container flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0 lg:py-8">
               <aside className="-mx-4 overflow-auto pt-4 lg:w-1/5 lg:pt-0">
                 <SidebarNav items={sidebarNavItems} />
               </aside>
