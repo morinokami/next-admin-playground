@@ -1,9 +1,18 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import Link from "next/link";
 import { useFieldArray, useForm } from "react-hook-form";
-import * as z from "zod";
+import {
+  array,
+  email,
+  type Input as _Input,
+  maxLength,
+  minLength,
+  object,
+  string,
+  url,
+} from "valibot";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -27,31 +36,21 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
-const profileFormSchema = z.object({
-  username: z
-    .string()
-    .min(2, {
-      message: "Username must be at least 2 characters.",
-    })
-    .max(30, {
-      message: "Username must not be longer than 30 characters.",
+const profileFormSchema = object({
+  username: string([
+    minLength(2, "Username must be at least 2 characters."),
+    maxLength(30, "Username must not be longer than 30 characters."),
+  ]),
+  email: string([minLength(1, "Please select an email to display."), email()]),
+  bio: string([minLength(4), maxLength(160)]),
+  urls: array(
+    object({
+      value: string([url("Please enter a valid URL.")]),
     }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      }),
-    )
-    .optional(),
+  ),
 });
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>;
+type ProfileFormValues = _Input<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
@@ -65,7 +64,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
-    resolver: zodResolver(profileFormSchema),
+    resolver: valibotResolver(profileFormSchema),
     defaultValues,
     mode: "onChange",
   });

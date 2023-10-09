@@ -1,9 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { boolean, enumType, Input, object, optional } from "valibot";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -20,18 +20,19 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
 
-const notificationsFormSchema = z.object({
-  type: z.enum(["all", "mentions", "none"], {
-    required_error: "You need to select a notification type.",
-  }),
-  mobile: z.boolean().default(false).optional(),
-  communication_emails: z.boolean().default(false).optional(),
-  social_emails: z.boolean().default(false).optional(),
-  marketing_emails: z.boolean().default(false).optional(),
-  security_emails: z.boolean(),
+const notificationsFormSchema = object({
+  type: enumType(
+    ["all", "mentions", "none"],
+    "You need to select a notification type.",
+  ),
+  mobile: optional(boolean(), false),
+  communication_emails: optional(boolean(), false),
+  social_emails: optional(boolean(), false),
+  marketing_emails: optional(boolean(), false),
+  security_emails: boolean(),
 });
 
-type NotificationsFormValues = z.infer<typeof notificationsFormSchema>;
+type NotificationsFormValues = Input<typeof notificationsFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<NotificationsFormValues> = {
@@ -43,7 +44,7 @@ const defaultValues: Partial<NotificationsFormValues> = {
 
 export function NotificationsForm() {
   const form = useForm<NotificationsFormValues>({
-    resolver: zodResolver(notificationsFormSchema),
+    resolver: valibotResolver(notificationsFormSchema),
     defaultValues,
   });
 

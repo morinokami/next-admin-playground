@@ -1,8 +1,8 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
+import { array, type Input, minLength, object, string } from "valibot";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -44,13 +44,13 @@ const items = [
   },
 ] as const;
 
-const displayFormSchema = z.object({
-  items: z.array(z.string()).refine((value) => value.some((item) => item), {
-    message: "You have to select at least one item.",
-  }),
+const displayFormSchema = object({
+  items: array(string(), [
+    minLength(1, "You have to select at least one item."),
+  ]),
 });
 
-type DisplayFormValues = z.infer<typeof displayFormSchema>;
+type DisplayFormValues = Input<typeof displayFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<DisplayFormValues> = {
@@ -59,7 +59,7 @@ const defaultValues: Partial<DisplayFormValues> = {
 
 export function DisplayForm() {
   const form = useForm<DisplayFormValues>({
-    resolver: zodResolver(displayFormSchema),
+    resolver: valibotResolver(displayFormSchema),
     defaultValues,
   });
 
