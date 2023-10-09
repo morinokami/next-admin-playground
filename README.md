@@ -18,3 +18,7 @@ This template is a combination of examples from shadcn/ui and is designed to hel
 ## Getting started
 
 TODO
+
+## Project structure
+
+TODO
