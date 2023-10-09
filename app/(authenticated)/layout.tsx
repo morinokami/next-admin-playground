@@ -5,19 +5,19 @@ import { SiteHeader } from "@/components/site-header";
 const sidebarNavItems = [
   {
     title: "Home",
-    href: "/admin",
+    href: "/",
   },
   {
     title: "Profile",
-    href: "/admin/profile",
+    href: "/profile",
   },
   {
     title: "Notifications",
-    href: "/admin/notifications",
+    href: "/notifications",
   },
   {
     title: "Display",
-    href: "/admin/display",
+    href: "/display",
   },
 ];
 
