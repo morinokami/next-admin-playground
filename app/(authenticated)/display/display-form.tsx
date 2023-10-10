@@ -2,7 +2,7 @@
 
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useForm } from "react-hook-form";
-import { array, type Input, minLength, object, string } from "valibot";
+import { array, minLength, object, type Output, string } from "valibot";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -50,7 +50,7 @@ const displayFormSchema = object({
   ]),
 });
 
-type DisplayFormValues = Input<typeof displayFormSchema>;
+type DisplayFormValues = Output<typeof displayFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<DisplayFormValues> = {

@@ -6,10 +6,10 @@ import { useFieldArray, useForm } from "react-hook-form";
 import {
   array,
   email,
-  type Input as _Input,
   maxLength,
   minLength,
   object,
+  Output,
   string,
   url,
 } from "valibot";
@@ -50,7 +50,7 @@ const profileFormSchema = object({
   ),
 });
 
-type ProfileFormValues = _Input<typeof profileFormSchema>;
+type ProfileFormValues = Output<typeof profileFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {

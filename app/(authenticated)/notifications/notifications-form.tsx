@@ -3,7 +3,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { boolean, enumType, Input, object, optional } from "valibot";
+import { boolean, enumType, object, optional, Output } from "valibot";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -32,7 +32,7 @@ const notificationsFormSchema = object({
   security_emails: boolean(),
 });
 
-type NotificationsFormValues = Input<typeof notificationsFormSchema>;
+type NotificationsFormValues = Output<typeof notificationsFormSchema>;
 
 // This can come from your database or API.
 const defaultValues: Partial<NotificationsFormValues> = {
