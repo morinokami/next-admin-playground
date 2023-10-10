@@ -9,7 +9,7 @@ This is a starter template using the following stack:
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 - Components: [shadcn/ui](https://ui.shadcn.com/)
 - Forms: [React Hook Form](https://react-hook-form.com/)
-- Validation: [valibot](https://valibot.dev/)
+- Validation: [Valibot](https://valibot.dev/)
 - Linting: [ESLint](https://eslint.org/)
 - Formatting: [Prettier](https://prettier.io/)
 
