@@ -59,26 +59,16 @@ export function DisplayForm() {
   });
 
   async function onSubmit(data: DisplayFormValues) {
-    try {
-      await displayFormAction(data);
-    } catch (error) {
-      console.error(error);
-      toast({
-        title: "Oops!",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">Something went wrong</code>
-          </pre>
-        ),
-      });
-      return;
-    }
+    const result = await displayFormAction(data);
 
+    const [title, description] = result.success
+      ? ["You submitted the following values:", JSON.stringify(data, null, 2)]
+      : ["Oops!", result.error];
     toast({
-      title: "You submitted the following values:",
+      title,
       description: (
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+          <code className="text-white">{description}</code>
         </pre>
       ),
     });
