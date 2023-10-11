@@ -62,6 +62,7 @@ export function DisplayForm() {
     try {
       await displayFormAction(data);
     } catch (error) {
+      console.error(error);
       toast({
         title: "Oops!",
         description: (
