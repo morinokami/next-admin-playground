@@ -2,8 +2,8 @@
 
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useForm } from "react-hook-form";
-import { array, minLength, object, type Output, string } from "valibot";
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,6 +16,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "@/components/ui/use-toast";
+
+import { displayFormAction } from "./actions";
+import { DisplayFormSchema, DisplayFormValues } from "./schemas";
 
 const items = [
   {
@@ -44,14 +47,6 @@ const items = [
   },
 ] as const;
 
-const displayFormSchema = object({
-  items: array(string(), [
-    minLength(1, "You have to select at least one item."),
-  ]),
-});
-
-type DisplayFormValues = Output<typeof displayFormSchema>;
-
 // This can come from your database or API.
 const defaultValues: Partial<DisplayFormValues> = {
   items: ["recents", "home"],
@@ -59,11 +54,25 @@ const defaultValues: Partial<DisplayFormValues> = {
 
 export function DisplayForm() {
   const form = useForm<DisplayFormValues>({
-    resolver: valibotResolver(displayFormSchema),
+    resolver: valibotResolver(DisplayFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: DisplayFormValues) {
+  async function onSubmit(data: DisplayFormValues) {
+    try {
+      await displayFormAction(data);
+    } catch (error) {
+      toast({
+        title: "Oops!",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">Something went wrong</code>
+          </pre>
+        ),
+      });
+      return;
+    }
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -125,7 +134,12 @@ export function DisplayForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Update display</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}{" "}
+          Update display
+        </Button>
       </form>
     </Form>
   );

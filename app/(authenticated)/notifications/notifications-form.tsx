@@ -3,8 +3,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { boolean, enumType, object, optional, Output } from "valibot";
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -20,19 +20,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
 
-const notificationsFormSchema = object({
-  type: enumType(
-    ["all", "mentions", "none"],
-    "You need to select a notification type.",
-  ),
-  mobile: optional(boolean(), false),
-  communication_emails: optional(boolean(), false),
-  social_emails: optional(boolean(), false),
-  marketing_emails: optional(boolean(), false),
-  security_emails: boolean(),
-});
-
-type NotificationsFormValues = Output<typeof notificationsFormSchema>;
+import { notificationsFormAction } from "./actions";
+import { NotificationsFormSchema, NotificationsFormValues } from "./schemas";
 
 // This can come from your database or API.
 const defaultValues: Partial<NotificationsFormValues> = {
@@ -44,11 +33,25 @@ const defaultValues: Partial<NotificationsFormValues> = {
 
 export function NotificationsForm() {
   const form = useForm<NotificationsFormValues>({
-    resolver: valibotResolver(notificationsFormSchema),
+    resolver: valibotResolver(NotificationsFormSchema),
     defaultValues,
   });
 
-  function onSubmit(data: NotificationsFormValues) {
+  async function onSubmit(data: NotificationsFormValues) {
+    try {
+      await notificationsFormAction(data);
+    } catch (error) {
+      toast({
+        title: "Oops!",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">Something went wrong</code>
+          </pre>
+        ),
+      });
+      return;
+    }
+
     toast({
       title: "You submitted the following values:",
       description: (
@@ -216,7 +219,12 @@ export function NotificationsForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Update notifications</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}{" "}
+          Update notifications
+        </Button>
       </form>
     </Form>
   );
