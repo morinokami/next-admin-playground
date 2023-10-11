@@ -3,17 +3,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import Link from "next/link";
 import { useFieldArray, useForm } from "react-hook-form";
-import {
-  array,
-  email,
-  maxLength,
-  minLength,
-  object,
-  Output,
-  string,
-  url,
-} from "valibot";
 
+import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -36,21 +27,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 
-const profileFormSchema = object({
-  username: string([
-    minLength(2, "Username must be at least 2 characters."),
-    maxLength(30, "Username must not be longer than 30 characters."),
-  ]),
-  email: string([minLength(1, "Please select an email to display."), email()]),
-  bio: string([minLength(4), maxLength(160)]),
-  urls: array(
-    object({
-      value: string([url("Please enter a valid URL.")]),
-    }),
-  ),
-});
-
-type ProfileFormValues = Output<typeof profileFormSchema>;
+import { profileFormAction } from "./actions";
+import { ProfileFormSchema, ProfileFormValues } from "./schemas";
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
@@ -64,7 +42,7 @@ const defaultValues: Partial<ProfileFormValues> = {
 
 export function ProfileForm() {
   const form = useForm<ProfileFormValues>({
-    resolver: valibotResolver(profileFormSchema),
+    resolver: valibotResolver(ProfileFormSchema),
     defaultValues,
     mode: "onChange",
   });
@@ -74,7 +52,8 @@ export function ProfileForm() {
     control: form.control,
   });
 
-  function onSubmit(data: ProfileFormValues) {
+  async function onSubmit(data: ProfileFormValues) {
+    await profileFormAction(data);
     toast({
       title: "You submitted the following values:",
       description: (
@@ -184,7 +163,12 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div>
-        <Button type="submit">Update profile</Button>
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting && (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          )}{" "}
+          Update profile
+        </Button>
       </form>
     </Form>
   );
