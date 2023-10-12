@@ -19,6 +19,10 @@ const sidebarNavItems = [
     title: "Display",
     href: "/display",
   },
+  {
+    title: "Tasks",
+    href: "/tasks",
+  },
 ];
 
 export default function AdminLayout({
